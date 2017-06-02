@@ -13,9 +13,12 @@ services:
         networks:
             - code-network
     php:
-        image: php:fpm
+        build:
+          context: .
+          dockerfile: Dockerfile
         volumes:
             - ./www:/www
+            - ./php:/usr/local/etc/php
         networks:
             - code-network
     mysql:
@@ -23,9 +26,9 @@ services:
         ports:
             - "3306:3306"
         environment:
-            MYSQL_ROOT_PASSWORD: adminroot
             MYSQL_USER: fajar
             MYSQL_PASSWORD: admin
+            MYSQL_ROOT_PASSWORD: root
         networks:
             - code-network
     phpmyadmin:
